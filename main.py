@@ -34,10 +34,18 @@ async def command_start_handler(message: Message) -> None:
         reply_markup=main_menu
     )
 
+
+
 @dp.message(F.text == "🇨🇳 Xitoy tili alifbosi")
 async def alphabet_handler(message: Message):
-    await message.answer("Bu bo'limda tez orada Xitoy tili alifbosi joylashtiriladi!")
-
+    text = (
+        "🇨🇳 **Xitoy tili alifbosi va asoslari**\n\n"
+        "Bilasizmi, xitoy tilida oddiy harflar yo'q. Uning o'rniga **Iyerogliflar** va ularning o'qilishini bildiruvchi **Pinyin** tizimi mavjud.\n\n"
+        "1. **Pinyin (Lotincha o'qilishi):** Xitoycha so'zlarni lotin harflari yordamida o'qish uchun ishlatiladi.\n"
+        "2. **Ohanglar (Tones):** Xitoy tilida 4 ta asosiy ohang bor. Ohang o'zgarsa, so'zning ma'nosi ham o'zgarib ketadi!\n\n"
+        "Tez orada bu yerda batafsil darslar va mashqlar qo'shiladi! 🚀"
+    )
+    await message.answer(text, parse_mode="Markdown")
 @dp.message(F.text == "📝 Testlar")
 async def tests_handler(message: Message):
     await message.answer("Bu bo'limda xitoy tilidan testlar bo'ladi!")
