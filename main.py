@@ -33,31 +33,31 @@ async def command_start_handler(message: Message) -> None:
         f"Salom, {html.bold(message.from_user.full_name)}! 👋\n\n"
         "Xitoy tili o'rganish botiga xush kelibsiz! Marhamat, quyidagi tugmalardan birini tanlang:"
     )
-    await message.answer(text, reply_markup=main_menu, parse_mode="HTML")
+    await message.answer(text, reply_markup=main_menu)
 
 @dp.message(F.text == "ℹ️ Bot haqida")
 async def about_handler(message: Message):
     text = (
-        "ℹ️ **Bot haqida batafsil ma'lumot**\n\n"
+        "ℹ️ <b>Bot haqida batafsil ma'lumot</b>\n\n"
         "Ushbu bot xitoy tilini noldan boshlab o'rganish, HSK imtihonlariga tayyorgarlik ko'rish va o'z bilimingizni sinovdan o'tkazish uchun maxsus yaratilgan.\n\n"
-        "🛠 **Asosiy imkoniyatlari:**\n"
+        "🛠 <b>Asosiy imkoniyatlari:</b>\n"
         "• Xitoy tili alifbosi va asosiy qoidalari bilan tanishish\n"
         "• PRO darajadagi maxsus testlar va imtihon topshiriqlari\n"
         "• Qulay va tushunarli interfeys\n\n"
         "Muvaffaqiyatli o'qishni tilaymiz! 🚀"
     )
-    await message.answer(text, reply_markup=main_menu, parse_mode="Markdown")
+    await message.answer(text, reply_markup=main_menu)
 
 @dp.message(F.text == "🇨🇳 Xitoy tili alifbosi")
 async def alphabet_handler(message: Message):
     text = (
-        "🇨🇳 **Xitoy tili alifbosi va asoslari**\n\n"
-        "Bilasizmi, xitoy tilida oddiy harflar yo'q. Uning o'rniga **Ierogliflar** va ularning o'qilishini bildiruvchi **Pinyin** tizimi mavjud:\n\n"
-        "1. **Pinyin (Lotincha o'qilishi):** Xitoycha so'zlarni lotin harflari yordamida o'qish va talaffuz qilish uchun ishlatiladi.\n"
-        "2. **Ohanglar (Tones):** Xitoy tilida 4 ta asosiy ohang bor. Ohang o'zgarsa, so'zning ma'nosi ham butunlay o'zgarib ketadi!\n\n"
-        "📚 *Tez arada bu bo'limda batafsil darslar va ovozli misollar qo'shiladi!*"
+        "🇨🇳 <b>Xitoy tili alifbosi va asoslari</b>\n\n"
+        "Bilasizmi, xitoy tilida oddiy harflar yo'q. Uning o'rniga <b>Ierogliflar</b> va ularning o'qilishini bildiruvchi <b>Pinyin</b> tizimi mavjud:\n\n"
+        "1. <b>Pinyin (Lotincha o'qilishi):</b> Xitoycha so'zlarni lotin harflari yordamida o'qish va talaffuz qilish uchun ishlatiladi.\n"
+        "2. <b>Ohanglar (Tones):</b> Xitoy tilida 4 ta asosiy ohang bor. Ohang o'zgarsa, so'zning ma'nosi ham butunlay o'zgarib ketadi!\n\n"
+        "📚 <i>Tez arada bu bo'limda batafsil darslar va ovozli misollar qo'shiladi!</i>"
     )
-    await message.answer(text, reply_markup=main_menu, parse_mode="Markdown")
+    await message.answer(text, reply_markup=main_menu)
 
 @dp.message(F.text == "📝 Pro testlar")
 async def pro_tests_handler(message: Message):
@@ -69,15 +69,15 @@ async def pro_tests_handler(message: Message):
         ]
     )
     text = (
-        "💎 **Xitoy tili PRO Testlar bo'limi**\n\n"
+        "💎 <b>Xitoy tili PRO Testlar bo'limi</b>\n\n"
         "Bu bo'limda siz o'z bilimingizni HSK imtihonlari darajasida sinab ko'rishingiz mumkin.\n\n"
-        "🚀 **Afzalliklari:**\n"
+        "🚀 <b>Afzalliklari:</b>\n"
         "• Real imtihon savollari\n"
         "• Xatolaringiz tahlili va tushuntirishi\n"
         "• Reyting tizimi\n\n"
         "Barcha PRO testlar rasmiy veb-saytimizda ishga tushdi! Marhamat, quyidagi tugma orqali o'tib, o'z bilimingizni sinang:"
     )
-    await message.answer(text, reply_markup=pro_test_kb, parse_mode="Markdown")
+    await message.answer(text, reply_markup=pro_test_kb)
 
 # Render port talabini bajarish uchun veb-server
 async def handle(request):
