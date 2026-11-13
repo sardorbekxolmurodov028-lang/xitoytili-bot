@@ -55,7 +55,7 @@ async def alphabet_handler(message: Message):
         "Bilasizmi, xitoy tilida oddiy harflar yo'q. Uning o'rniga <b>Ierogliflar</b> va ularning o'qilishini bildiruvchi <b>Pinyin</b> tizimi mavjud:\n\n"
         "1. <b>Pinyin (Lotincha o'qilishi):</b> Xitoycha so'zlarni lotin harflari yordamida o'qish va talaffuz qilish uchun ishlatiladi.\n"
         "2. <b>Ohanglar (Tones):</b> Xitoy tilida 4 ta asosiy ohang bor. Ohang o'zgarsa, so'zning ma'nosi ham butunlay o'zgarib ketadi!\n\n"
-        "📚 <i>Tez arada bu bo'limda batafsil darslar va ovozli misollar qo'shiladi!</i>"
+        "📚 <i>Tez orada bu bo'limda batafsil darslar va ovozli misollar qo'shiladi!</i>"
     )
     await message.answer(text, reply_markup=main_menu)
 
