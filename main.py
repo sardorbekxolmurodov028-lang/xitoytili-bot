@@ -78,7 +78,7 @@ async def start_web_server():
 
 async def main() -> None:
     bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-    # Veb-serverni ishga tushiramiz (Render uchun)
+    # Veb-serverni ishga tushiramiz (Render talabi uchun)
     await start_web_server()
     # Botni ishga tushiramiz
     await dp.start_polling(bot)
