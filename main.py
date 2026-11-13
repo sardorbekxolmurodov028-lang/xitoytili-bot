@@ -9,7 +9,7 @@ from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 
-TOKEN = "8656922621:AAHpd5fuIs6vSrnzIwjXUlYDgXOyzuKDCts"
+TOKEN = "8656922621:AAHpd5FuIs6vSrnzIwJXU1YDgXOyzuKDCs"
 
 dp = Dispatcher()
 
@@ -37,11 +37,27 @@ async def command_start_handler(message: Message) -> None:
 
 @dp.message(F.text == "ℹ️ Bot haqida")
 async def about_handler(message: Message):
-    await message.answer("Bu bot xitoy tilini o'rganishda yordam berish uchun yaratilgan.", reply_markup=main_menu)
+    text = (
+        "ℹ️ **Bot haqida batafsil ma'lumot**\n\n"
+        "Ushbu bot xitoy tilini noldan boshlab o'rganish, HSK imtihonlariga tayyorgarlik ko'rish va o'z bilimingizni sinovdan o'tkazish uchun maxsus yaratilgan.\n\n"
+        "🛠 **Asosiy imkoniyatlari:**\n"
+        "• Xitoy tili alifbosi va asosiy qoidalari bilan tanishish\n"
+        "• PRO darajadagi maxsus testlar va imtihon topshiriqlari\n"
+        "• Qulay va tushunarli interfeys\n\n"
+        "Muvaffaqiyatli o'qishni tilaymiz! 🚀"
+    )
+    await message.answer(text, reply_markup=main_menu, parse_mode="Markdown")
 
 @dp.message(F.text == "🇨🇳 Xitoy tili alifbosi")
 async def alphabet_handler(message: Message):
-    await message.answer("Xitoy tili Pinyin va hierogliflar bo'limi tez orada qo'shiladi!", reply_markup=main_menu)
+    text = (
+        "🇨🇳 **Xitoy tili alifbosi va asoslari**\n\n"
+        "Bilasizmi, xitoy tilida oddiy harflar yo'q. Uning o'rniga **Ierogliflar** va ularning o'qilishini bildiruvchi **Pinyin** tizimi mavjud:\n\n"
+        "1. **Pinyin (Lotincha o'qilishi):** Xitoycha so'zlarni lotin harflari yordamida o'qish va talaffuz qilish uchun ishlatiladi.\n"
+        "2. **Ohanglar (Tones):** Xitoy tilida 4 ta asosiy ohang bor. Ohang o'zgarsa, so'zning ma'nosi ham butunlay o'zgarib ketadi!\n\n"
+        "📚 *Tez arada bu bo'limda batafsil darslar va ovozli misollar qo'shiladi!*"
+    )
+    await message.answer(text, reply_markup=main_menu, parse_mode="Markdown")
 
 @dp.message(F.text == "📝 Pro testlar")
 async def pro_tests_handler(message: Message):
@@ -78,7 +94,7 @@ async def start_web_server():
 
 async def main() -> None:
     bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-    # Veb-serverni ishga tushiramiz (Render talabi uchun)
+    # Veb-serverni ishga tushiramiz (Render uchun)
     await start_web_server()
     # Botni ishga tushiramiz
     await dp.start_polling(bot)
