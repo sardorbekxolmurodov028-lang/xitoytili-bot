@@ -13,15 +13,16 @@ TOKEN = "8656922621:AAHpd5fuIs6vSrnzIwjXUlYDgXOyzuKDCts"
 
 dp = Dispatcher()
 
-# Asosiy menyu tugmalari
+# Yangi va foydali asosiy menyu tugmalari
 main_menu = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text="🇨🇳 Xitoy tili alifbosi"),
-            KeyboardButton(text="📝 Pro testlar"),
+            KeyboardButton(text="💬 Kunlik iboralar"),
+            KeyboardButton(text="🎯 Tezkor viktorina"),
         ],
         [
             KeyboardButton(text="ℹ️ Bot haqida"),
+            KeyboardButton(text="📞 Admin bilan aloqa"),
         ]
     ],
     resize_keyboard=True
@@ -39,45 +40,45 @@ async def command_start_handler(message: Message) -> None:
 async def about_handler(message: Message):
     text = (
         "ℹ️ <b>Bot haqida batafsil ma'lumot</b>\n\n"
-        "Ushbu bot xitoy tilini noldan boshlab o'rganish, HSK imtihonlariga tayyorgarlik ko'rish va o'z bilimingizni sinovdan o'tkazish uchun maxsus yaratilgan.\n\n"
+        "Ushbu bot xitoy tilini noldan boshlab o'rganish, kundalik so'zlashuv iboralarini o'zlashtirish va qiziqarli testlar orqali bilimni oshirish uchun yaratilgan.\n\n"
         "🛠 <b>Asosiy imkoniyatlari:</b>\n"
-        "• Xitoy tili alifbosi va asosiy qoidalari bilan tanishish\n"
-        "• PRO darajadagi maxsus testlar va imtihon topshiriqlari\n"
-        "• Qulay va tushunarli interfeys\n\n"
+        "• 💬 Kunlik muhim iboralar va ularning Pinyin transkripsiyasi\n"
+        "• 🎯 Interaktiv tezkor testlar\n"
+        "• 📱 Qulay va sodda interfeys\n\n"
         "Muvaffaqiyatli o'qishni tilaymiz! 🚀"
     )
     await message.answer(text, reply_markup=main_menu)
 
-@dp.message(F.text == "🇨🇳 Xitoy tili alifbosi")
-async def alphabet_handler(message: Message):
+@dp.message(F.text == "💬 Kunlik iboralar")
+async def daily_phrases_handler(message: Message):
     text = (
-        "🇨🇳 <b>Xitoy tili alifbosi va asoslari</b>\n\n"
-        "Bilasizmi, xitoy tilida oddiy harflar yo'q. Uning o'rniga <b>Ierogliflar</b> va ularning o'qilishini bildiruvchi <b>Pinyin</b> tizimi mavjud:\n\n"
-        "1. <b>Pinyin (Lotincha o'qilishi):</b> Xitoycha so'zlarni lotin harflari yordamida o'qish va talaffuz qilish uchun ishlatiladi.\n"
-        "2. <b>Ohanglar (Tones):</b> Xitoy tilida 4 ta asosiy ohang bor. Ohang o'zgarsa, so'zning ma'nosi ham butunlay o'zgarib ketadi!\n\n"
-        "📚 <i>Tez orada bu bo'limda batafsil darslar va ovozli misollar qo'shiladi!</i>"
+        "💬 <b>Bugungi foydali xitoycha ibora:</b>\n\n"
+        "🇨🇳 <b>你好 (Nǐ hǎo)</b>\n"
+        "🇺🇿 <b>Ma'nosi:</b> Salom / Assalomu alaykum\n\n"
+        "💡 <i>Izoh:</i> Xitoy tilida salomlashishning eng ommabop shakli. 'Nǐ' — sen, 'hǎo' — yaxshi degan ma'noni bildiradi."
     )
     await message.answer(text, reply_markup=main_menu)
 
-@dp.message(F.text == "📝 Pro testlar")
-async def pro_tests_handler(message: Message):
-    pro_test_kb = InlineKeyboardMarkup(
+@dp.message(F.text == "🎯 Tezkor viktorina")
+async def quiz_handler(message: Message):
+    quiz_kb = InlineKeyboardMarkup(
         inline_keyboard=[
-            [
-                InlineKeyboardButton(text="🌐 Saytda boshlash (PRO)", url="https://SIZNING_SAYT_MANZILINGIZ.uz")
-            ]
+            [InlineKeyboardButton(text="A) Salom", callback_data="wrong")],
+            [InlineKeyboardButton(text="B) Rahmat", callback_data="correct")],
+            [InlineKeyboardButton(text="C) Xayr", callback_data="wrong")]
         ]
     )
+    text = "🎯 <b>Mini-test:</b>\n\nXitoy tilida <b>'谢谢 (Xièxie)'</b> so'zi qanday ma'noni anglatadi?"
+    await message.answer(text, reply_markup=quiz_kb)
+
+@dp.message(F.text == "📞 Admin bilan aloqa")
+async def contact_handler(message: Message):
     text = (
-        "💎 <b>Xitoy tili PRO Testlar bo'limi</b>\n\n"
-        "Bu bo'limda siz o'z bilimingizni HSK imtihonlari darajasida sinab ko'rishingiz mumkin.\n\n"
-        "🚀 <b>Afzalliklari:</b>\n"
-        "• Real imtihon savollari\n"
-        "• Xatolaringiz tahlili va tushuntirishi\n"
-        "• Reyting tizimi\n\n"
-        "Barcha PRO testlar rasmiy veb-saytimizda ishga tushdi! Marhamat, quyidagi tugma orqali o'tib, o'z bilimingizni sinang:"
+        "📞 <b>Bog'lanish uchun:</b>\n\n"
+        "Savollar, takliflar yoki murojaatlar bo'yicha adalinga yozishingiz mumkin:\n"
+        "👉 @Sardorbek_Kholmurodov"
     )
-    await message.answer(text, reply_markup=pro_test_kb)
+    await message.answer(text, reply_markup=main_menu)
 
 # Render port talabini bajarish uchun veb-server
 async def handle(request):
@@ -94,9 +95,7 @@ async def start_web_server():
 
 async def main() -> None:
     bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-    # Veb-serverni ishga tushiramiz (Render uchun)
     await start_web_server()
-    # Botni ishga tushiramiz
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
