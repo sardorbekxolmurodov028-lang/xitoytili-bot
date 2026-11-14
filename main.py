@@ -9,11 +9,12 @@ from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 
+# Bot tokeni
 TOKEN = "8656922621:AAHpd5fuIs6vSrnzIwjXUlYDgXOyzuKDCts"
 
 dp = Dispatcher()
 
-# Professional va eng kerakli asosiy menyu
+# Professional asosiy menyu (Tugmalar dizayni)
 main_menu = ReplyKeyboardMarkup(
     keyboard=[
         [
@@ -31,9 +32,10 @@ main_menu = ReplyKeyboardMarkup(
 @dp.message(CommandStart())
 async def command_start_handler(message: Message) -> None:
     text = (
-        f"Salom, {html.bold(message.from_user.full_name)}! 👋\n\n"
-        "🇨🇳 <b>Xitoy tili Pro</b> botiga xush kelibsiz!\n\n"
-        "Bu yerda siz tilni noldan o'rganishingiz, testlar yordamida o'z bilimingizni sinashingiz va saytimizdagi qiziqarli materiallardan foydalanishingiz mumkin. Kerakli bo'limni tanlang:"
+        f"Assalomu alaykum, {html.bold(message.from_user.full_name)}! 👋\n\n"
+        "🇨🇳 <b>Xitoy tili Pro</b> rasmiy ta'lim botiga xush kelibsiz!\n\n"
+        "Ushbu bot yordamida siz xitoy tilini noldan o'rganishingiz, kundalik iboralarni o'zlashtirishingiz va HSK daraja testlaridan o'tishingiz mumkin.\n\n"
+        "👇 Kerakli bo'limni tanlang:"
     )
     await message.answer(text, reply_markup=main_menu)
 
@@ -43,7 +45,8 @@ async def daily_phrases_handler(message: Message):
         "💬 <b>Bugungi foydali xitoycha ibora:</b>\n\n"
         "🇨🇳 <b>认识你很高兴 (Rènshi nǐ hěn gāoxìng)</b>\n"
         "🇺🇿 <b>Ma'nosi:</b> Siz bilan tanishganimdan xursandman!\n\n"
-        "💡 <i>Har kuni botga kirib, yangi iboralarni yodlab boring!</i>"
+        "📌 <i>Pinyin talaffuzi:</i> [Renshi ni hen gaosin]\n"
+        "💡 <i>Tavsiya:</i> Kuniga kamida 1 tadan ibora yodlash til o'rganishni tezlashtiradi!"
     )
     await message.answer(text, reply_markup=main_menu)
 
@@ -51,13 +54,13 @@ async def daily_phrases_handler(message: Message):
 async def pro_tests_handler(message: Message):
     kb = InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(text="🧠 HSK 1 - Daraja testi", callback_data="hsk1_test")],
-            [InlineKeyboardButton(text="🧠 HSK 2 - Daraja testi", callback_data="hsk2_test")]
+            [InlineKeyboardButton(text="🧠 HSK 1 - Daraja sinovi", callback_data="hsk1_test")],
+            [InlineKeyboardButton(text="🧠 HSK 2 - Daraja sinovi", callback_data="hsk2_test")]
         ]
     )
     text = (
-        "🎯 <b>PRO Testlar bo'limi</b>\n\n"
-        "O'z bilimingizni sinab ko'rish uchun quyidagi testlardan birini tanlang:"
+        "🎯 <b>PRO Imtihon va Testlar markazi</b>\n\n"
+        "O'z bilimingizni professional darajada sinab ko'ring. O'zingizga kerakli darajadagi testni tanlang:"
     )
     await message.answer(text, reply_markup=kb)
 
@@ -67,11 +70,11 @@ async def hsk1_test(callback: CallbackQuery):
         inline_keyboard=[
             [InlineKeyboardButton(text="A) Salom", callback_data="wrong_ans")],
             [InlineKeyboardButton(text="B) Rahmat", callback_data="correct_ans")],
-            [InlineKeyboardButton(text="C) Hayr", callback_data="wrong_ans")]
+            [InlineKeyboardButton(text="C) Xayr", callback_data="wrong_ans")]
         ]
     )
     await callback.message.edit_text(
-        "📝 <b>HSK 1 Viktorina:</b>\n\n"
+        "📝 <b>HSK 1 Daraja testi (1-savol):</b>\n\n"
         "Xitoy tilida <b>'谢谢 (Xièxie)'</b> so'zi qanday ma'noni anglatadi?",
         reply_markup=quiz_kb
     )
@@ -87,7 +90,7 @@ async def hsk2_test(callback: CallbackQuery):
         ]
     )
     await callback.message.edit_text(
-        "📝 <b>HSK 2 Viktorina:</b>\n\n"
+        "📝 <b>HSK 2 Daraja testi (1-savol):</b>\n\n"
         "Xitoy tilida <b>'学校 (xuéxiào)'</b> so'zining ma'nosi nima?",
         reply_markup=quiz_kb
     )
@@ -95,39 +98,47 @@ async def hsk2_test(callback: CallbackQuery):
 
 @dp.callback_query(F.data == "correct_ans")
 async def correct_handler(callback: CallbackQuery):
-    await callback.message.edit_text("✅ <b>Ajoyib, to'g'ri javob!</b> 🏆\n\nBilimingizni yanada oshiring!")
-    await callback.answer("To'g'ri javob!")
+    await callback.message.edit_text(
+        "✅ <b>Ajoyib, javobingiz to'g'ri!</b> 🏆\n\n"
+        "Siz xitoy tili asoslarini yaxshi o'zlashtirmoqdasiz. Keyingi testlarda ko'rishguncha!"
+    )
+    await callback.answer("To'g'ri javob! 🎉")
 
 @dp.callback_query(F.data == "wrong_ans")
 async def wrong_handler(callback: CallbackQuery):
-    await callback.message.edit_text("❌ <b>Afsus, noto'g'ri javob.</b>\n\nLekin xafa bo'lmang, yana urinib ko'rishingiz mumkin! 💪")
-    await callback.answer("Noto'g'ri javob")
+    await callback.message.edit_text(
+        "❌ <b>Afsuski, bu noto'g'ri javob.</b>\n\n"
+        "Lekin tushkunlikka tushmang! Lug'atlarni takrorlab, yana urinib ko'rishingiz mumkin 💪"
+    )
+    await callback.answer("Noto'g'ri javob ⚠️")
 
 @dp.message(F.text == "🌐 Veb-saytimiz")
 async def website_handler(message: Message):
     site_kb = InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(text="🌐 Saytga o'tish (PRO)", url="https://xitoytili-bot-1.onrender.com")]
+            [InlineKeyboardButton(text="🌐 Rasmiy saytni ochish (PRO)", url="https://xitoytili-bot-1.onrender.com")]
         ]
     )
     text = (
-        "🌐 <b>Rasmiy Veb-saytimiz</b>\n\n"
-        "Barcha qo'shimcha darslar, lug'atlar va foydali materiallar veb-saytimizda joylashgan. Marhamat, quyidagi tugma orqali o'ting:"
+        "🌐 <b>Xitoy Tili PRO Veb-sayti</b>\n\n"
+        "Barcha turdagi video darsliklar, audio materiallar va qo'llanmalar bizning rasmiy platformamizda joylashgan.\n\n"
+        "🔗 Saytga o'tish uchun quyidagi tugmani bosing:"
     )
     await message.answer(text, reply_markup=site_kb)
 
 @dp.message(F.text == "📞 Admin bilan aloqa")
 async def contact_handler(message: Message):
     text = (
-        "📞 <b>Bog'lanish uchun:</b>\n\n"
-        "Savollar, takliflar yoki hamkorlik uchun adminga murojaat qiling:\n"
-        "👉 @Sardorbek_Kholmurodov"
+        "📞 <b>Murojaat va Hamkorlik uchun:</b>\n\n"
+        "Bot yuzasidan savollaringiz bo'lsa yoki takliflar bermoqchi bo'lsangiz, adminga yozishingiz mumkin:\n\n"
+        "👉 <b>Asosiy admin:</b> @Sardorbek_Kholmurodov\n"
+        "⏱ <i>Tez orada javob beramiz!</i>"
     )
     await message.answer(text, reply_markup=main_menu)
 
-# Render port talabini bajarish uchun veb-server
+# Render platformasi talabini bajarish uchun veb-server
 async def handle(request):
-    return web.Response(text="Bot is running and alive!")
+    return web.Response(text="Xitoy Tili Pro Bot is running smoothly!")
 
 async def start_web_server():
     app = web.Application()
@@ -140,7 +151,9 @@ async def start_web_server():
 
 async def main() -> None:
     bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    # Veb-serverni ishga tushiramiz
     await start_web_server()
+    # Botni ishga tushiramiz
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
